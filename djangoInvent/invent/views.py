@@ -7,7 +7,7 @@ def MyView(request):
     # for q in query_results :
     #     print(q.name, q.num, q.num_kab, )
 
-    return render(request, 'templates\list.html', context=query_results)
+    return render(request, "list.html", {"query_results":query_results})
 
 
 # Create your views here.
