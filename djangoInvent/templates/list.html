@@ -1,0 +1,28 @@
+<table>
+    <tr>
+        <th>
+            Наименование
+        </th>
+        <th>
+            Номер
+        </th>
+        <th>
+            Номер кабинета
+        </th>
+        <th>
+            Ответственный
+        </th>
+        <th>
+            Количество
+        </th>
+    </tr>
+    {% for item in query_results %}
+    <tr> 
+        <td>{{ item.name }}</td>
+        <td>{{ item.num }}</td>
+        <td>{{ item.num_kab }}</td>
+        <td>{{ item.response }}</td>
+        <td>{{ item.count }}</td>
+    </tr>
+    {% endfor %}
+</table>
