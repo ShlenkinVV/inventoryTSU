@@ -11,18 +11,7 @@ def MyView(request):
     else:
         posts = Inventar.objects.all()
 
-    #fields = [f for f in table._meta.fields]
-    #queries = [Q(**{f.name: SEARCH_TERM}) for f in fields]
-
-
-   # qs= Q()
-    #for query in queries:
-   #     qs = qs | query
-
-
-   # query_results = Inventar.objects(posts)
-    # for q in query_results :
-    #     print(q.name, q.num, q.num_kab, )
+   
 
     return render(request, "list.html", {"query_results":posts})
 
