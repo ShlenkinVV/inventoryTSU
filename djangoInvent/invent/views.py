@@ -6,7 +6,7 @@ def MyView(request):
     search_post = request.GET.get('search')
 
     if search_post:
-        posts = Inventar.objects.filter(Q(name__icontains=search_post))
+        posts = Inventar.objects.filter(Q(name__icontains=search_post) | Q(num__icontains=search_post) | Q(num_kab__num__icontains=search_post))
         
     else:
         posts = Inventar.objects.all()

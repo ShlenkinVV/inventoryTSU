@@ -18,6 +18,6 @@ from django.urls import path
 from invent.views import MyView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', MyView)
+    path('admin/', admin.site.urls, name="admin"),
+    path('', MyView, name="index")
 ]
