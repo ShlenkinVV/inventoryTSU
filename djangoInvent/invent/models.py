@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Kab(models.Model):
-    num = models.CharField(max_length=10)
+    num = models.CharField(max_length=10, unique=True, verbose_name="номер")
 
 
     def __str__(self):
@@ -16,7 +16,7 @@ class Kab(models.Model):
         
 class Inventar(models.Model):
     name = models.CharField(max_length=40)
-    num = models.CharField(max_length=40)
+    num = models.CharField(max_length=40, verbose_name="номер")
     num_kab = models.ForeignKey(Kab, on_delete=models.DO_NOTHING)
     response = models.CharField(max_length=40)
     count = models.CharField(max_length=5)
