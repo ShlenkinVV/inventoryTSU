@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from invent.views import MyView
+from invent.views import MyView, some_view
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
-    path('', MyView, name="index")
+    path('', MyView, name="index"),
+    path('pdf', some_view, name="pdfMaker"),
+    
 ]

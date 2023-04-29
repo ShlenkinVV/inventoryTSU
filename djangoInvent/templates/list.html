@@ -38,4 +38,11 @@
     </tr>
     {% endfor %}
 </table>
+
+<a target="_blank" href="{% url 'pdfMaker' %}?search={{search_post}}">
+    <button {% if not pdf_enabled %} disabled {% endif %}>
+        Печать PDF
+    </button>
+</a>
+
 {% endblock content %}
