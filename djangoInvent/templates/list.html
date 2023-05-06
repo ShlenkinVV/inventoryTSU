@@ -10,6 +10,13 @@
     
 </form>
 
+<div style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px;">
+    <a target="_blank" href="{% url 'pdfMaker' %}?search={{search_post}}">
+        <button {% if not pdf_enabled %} disabled {% endif %}>
+            Печать PDF
+        </button>
+    </a>
+</div>
 <table>
     <tr>
         <th>
@@ -28,6 +35,7 @@
             Количество
         </th>
     </tr>
+
     {% for item in query_results %}
     <tr> 
         <td>{{ item.name }}</td>
@@ -39,10 +47,6 @@
     {% endfor %}
 </table>
 
-<a target="_blank" href="{% url 'pdfMaker' %}?search={{search_post}}">
-    <button {% if not pdf_enabled %} disabled {% endif %}>
-        Печать PDF
-    </button>
-</a>
+
 
 {% endblock content %}

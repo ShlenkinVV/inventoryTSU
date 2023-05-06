@@ -33,99 +33,40 @@ def some_view(request):
         pdf.add_font(family="DejaVu", fname="C:\\Users\\Владимир\\invent\\djangoInvent\\invent\\DejaVuSans.ttf", style="")
         pdf.add_font(family="DejaVu", fname="C:\\Users\\Владимир\\invent\\djangoInvent\\invent\\DejaVuSans-Bold.ttf", style="B")
         pdf.set_font("DejaVu", size=13)
-        # Basic table:
-        pdf.add_page()
-        n=item[0].num_kab
-        pdf.cell(0,0, f"КАБИНЕТ { n }")
-        pdf.ln()
-        with pdf.table() as table:
-            header = table.row()
-            header.cell("Наименование")
-            header.cell("Идентификатор")
-            header.cell("Количество")
-            header.cell("Ответсвенный")
-            for data_row in item:
-                row = table.row()
-                row.cell(data_row.name)
-                row.cell(data_row.num)
-                row.cell(data_row.count)
-                row.cell(data_row.response)
+        set_kab=set()
+        for it in item:
+            set_kab.add(it.num_kab)
+
+        for kab in set_kab:
+            pdf.add_page()
+            pdf.cell(0,0, f"КАБИНЕТ { kab }")
+            pdf.ln()
+            count = 0
+            with pdf.table(col_widths=(10, 30, 35, 25, 30)) as table:
+                header = table.row()
+                header.cell("№")
+                header.cell("Наименование")
+                header.cell("Идентификатор")
+                header.cell("Количество")
+                header.cell("Ответственный")
+                for data_row in item:
+                    if data_row.num_kab == kab:
+                        row = table.row()
+                        count +=1
+                        row.cell(str(count))
+                        row.cell(data_row.name)
+                        row.cell(data_row.num)
+                        row.cell(data_row.count)
+                        row.cell(data_row.response)
                 
         pdf.output("my_pdf.pdf", 'F')
 
-        #return HttpResponse("GOOOD")
         buffer = io.BytesIO()
         return FileResponse(open("my_pdf.pdf", "rb"))
     else:
         return HttpResponse("Нет объектов для печати!")
 
 
-#################################################################################################################################
-
-    # pdf = FPDF() 
-    # pdf.add_page() 
-
-    # pdf.set_font('Arial', 'B', 16) 
-    # pdf.cell(40, 10, 'Sample PDF') 
-    # pdf.ln()
-    # for index, row in df.iterrows(): 
-    #     for value in row: 
-    #         pdf.cell(40, 10, str(value), border=1) 
-    #     pdf.ln() 
-
-    # # Convert dataframe to HTML table and add it to PDF 
-    # #pdf.write_html(pd.DataFrame.to_html(df)) 
-    
-    # # Save the PDF 
-    # pdf.output("my_pdf.pdf", 'F')
-
-    # #return HttpResponse("GOOOD")
-    # buffer = io.BytesIO()
-    # return FileResponse(open("my_pdf.pdf", "rb"))
-
-    ###########################################################################
-  
-    # buffer = io.BytesIO()
-
-  
-    # p = canvas.Canvas(buffer)
-
-
-    # items = Inventar.objects.all()
-
-
-    # pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
-    # p.setFont('Arial', 10)
-
-    # data = [[0]*4 for i in range(4)]
-
-    
-    # for i, item in enumerate(items):
-    #         data[i][0] = str(item.name).encode('utf-8')
-    #         data[i][1] = str(item.num)
-    #         data[i][2] = str(item.response).encode('utf-8')
-    #         data[i][3] = str(item.count).encode('utf-8')
-
-    # t=Table(data)
-    
-    # p.draw
-
-####################################################################################################
-    # for i, item in enumerate(items):
-    #     p.drawString(80,750-(i*25), str(item.name).encode('utf-8'))
-    #     p.drawString(130,750-(i*25), str(item.num))
-    #     p.drawString(180,750-(i*25), str(item.response).encode('utf-8'))
-    #     p.drawString(230,750-(i*25), str(item.count).encode('utf-8'))
-
-
-    # Close the PDF object cleanly, and we're done.
-    # p.showPage()
-    # p.save()
-
-    # # FileResponse sets the Content-Disposition header so that browsers
-    # # present the option to save the file.
-    # buffer.seek(0)
-    # return FileResponse(buffer, as_attachment=True, filename="hello.pdf")
 
 def MyView(request):
     search_post = request.GET.get('search')
