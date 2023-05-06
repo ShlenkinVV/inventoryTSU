@@ -36,7 +36,7 @@
         </th>
     </tr>
 
-    {% for item in query_results %}
+    {% for item in page_obj %}
     <tr> 
         <td>{{ item.name }}</td>
         <td>{{ item.num }}</td>
@@ -45,7 +45,35 @@
         <td>{{ item.count }}</td>
     </tr>
     {% endfor %}
+
+   
 </table>
+
+
+<!-- style="display: flex; justify-content: center; align-items: center;" -->
+<div class="pagination" >
+    <span class="step-links row">
+        <div class="col-2"></div>
+       
+        {% if page_obj.has_previous %}
+            <a class="button col" href="?page=1">&laquo; Начало</a>
+            <a class="button col" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+        
+        <div class="col" style="display: flex; justify-content: center; align-items: center;">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+            </span>
+        </div>
+
+        {% if page_obj.has_next %}
+            <a class="button col" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+            <a class="button col" href="?page={{ page_obj.paginator.num_pages }}">Конец &raquo;</a>
+        {% endif %}
+        <div class="col-2"></div>
+       
+    </span>
+</div>
 
 
 

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Inventar
 from django.db.models import Q
 from django.http import FileResponse, HttpResponse
+from django.core.paginator import Paginator
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
@@ -27,6 +28,9 @@ def some_view(request):
         item = Inventar.objects.filter(Q(name__icontains=search_post) | Q(num__icontains=search_post) | Q(num_kab__num__icontains=search_post))
     else:
         item = Inventar.objects.all()
+
+
+
 
     if len(item) > 0:
         pdf = FPDF()
@@ -71,6 +75,9 @@ def some_view(request):
 def MyView(request):
     search_post = request.GET.get('search')
 
+    # p = Paginator(search_post, 2)
+    
+
     if search_post:
         posts = Inventar.objects.filter(Q(name__icontains=search_post) | Q(num__icontains=search_post) | Q(num_kab__num__icontains=search_post))
         
@@ -78,10 +85,21 @@ def MyView(request):
         posts = Inventar.objects.all()
 
     
+    
     pdf_enabled = True
     if len(posts) == 0:
         pdf_enabled = False
-    return render(request, "list.html", {"query_results":posts, "search_post":search_post, "pdf_enabled":pdf_enabled})
+
+    
+    paginator = Paginator(posts, 3)  # Show 25 contacts per page.
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    # return render(request, "list.html", {"page_obj": page_obj})
+
+    return render(request, "list.html", {"query_results":posts, "search_post":search_post, "pdf_enabled":pdf_enabled, "page_obj": page_obj})
+
+
 
 
 # Create your views here.
