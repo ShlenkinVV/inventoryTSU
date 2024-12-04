@@ -86,9 +86,9 @@ DATABASES = {
 
         'NAME': 'Inventarizate',
 
-        'USER': 'postgres',
+        'USER': ${USER},
 
-        'PASSWORD': 'F54036',
+        'PASSWORD': ${PASSWORD},
 
         'HOST': 'localhost',
 
